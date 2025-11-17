@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .container {
+            padding: 30px;
+            border-radius: 10px;
+            align-items: center;
+            width: 1000px;
+            max-width: 95%;
+            margin: 80px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="site-nav">
+        <div class="nav-inner">
+            <a style="font-family: 'Bradley Hand', cursive; font-size: 25pt;" class="brand" href="/">🌱
+                SmartAgroCare</a>
+            <div class="nav-links">
+                <a href="/about" class="nav-link">About</a>
+                <div class="dropdown">
+                    <button class="dropbtn">Farmer Care ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/crop">Crop Recommendation</a>
+                        <a href="/fertilizer">Fertilizer Recommendation</a>
+                        <a href="/weather">7-Day Weather Forecast</a>
+                    </div>
+                </div>
+                <a class="nav-link" href="/weather">Weather</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Prediction Result !!!</h2>
+        <p
+            style="border: 1px solid black; padding: 15px; text-align: center; border-radius: 5px; width: 300px; margin: auto;">
+            <strong>CROP:</strong> {{ suggestions["Crop"] }}
+        </p>
+        <p
+            style="border: 1px solid black; padding: 15px; text-align: center; border-radius: 5px; width: 300px; margin: auto; margin-top: 30px; margin-bottom: 30px;">
+            <strong>SEASON:</strong> {{ suggestions["Season"] }}
+        </p>
+        <p style="text-align:center"><a href="/">Go Back</a></p>
+    </div>
+
+    <div class="wheat-field" aria-hidden="true"></div>
+
+    <script>
+        const wheatField = document.querySelector('.wheat-field');
+        const numberOfStalks = 80;
+
+        for (let i = 0; i < numberOfStalks; i++) {
+            const stalk = document.createElement('div');
+            stalk.classList.add('wheat-stalk');
+
+            stalk.style.left = `${Math.random() * 100}vw`;
+            stalk.style.height = `${40 + Math.random() * 15}vh`;
+            stalk.style.bottom = `${Math.random() * 10}vh`;
+            stalk.style.animationDelay = `${Math.random() * 4}s`;
+            stalk.style.animationDuration = `${4 + Math.random() * 3}s`;
+
+            const head = document.createElement('div');
+            head.classList.add('wheat-head');
+            stalk.appendChild(head);
+
+            wheatField.appendChild(stalk);
+        }
+    </script>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div>© {{ now().year if now is defined else "" }}
+                SmartAgroCare</div>
+            <div class="footer-links">
+                <a href="/about">About</a>
+                <a href="/privacy">Privacy</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
+
+            <p style="text-align: center; margin-top: 16px;">
+                <a class="btn-back" href="/crop">🔁 Try another input</a>
+            </p>

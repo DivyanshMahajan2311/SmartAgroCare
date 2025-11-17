@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>7-Day Forecast — Hybrid Models</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* additional page-specific small tweaks */
+        .wrap {
+            max-width: 1100px;
+            margin: 36px auto;
+            padding: 22px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="site-nav">
+        <div class="nav-inner">
+            <a style="font-family: 'Bradley Hand', cursive; font-size: 25pt;" class="brand" href="/">🌱
+                SmartAgroCare</a>
+            <div class="nav-links">
+                <a href="/about" class="nav-link">About</a>
+                <div class="dropdown">
+                    <button class="dropbtn">Farmer Care ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/crop">Crop Recommendation</a>
+                        <a href="/fertilizer">Fertilizer Recommendation</a>
+                        <a href="/weather">7-Day Weather Forecast</a>
+                    </div>
+                </div>
+                <a class="nav-link" href="/weather">Weather</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="wrap">
+        <header>
+            <div>
+                <h1>7-Day Weather Forecast</h1>
+                <div class="sub">Today: <strong id="today">{{ today
+                        }}</strong></div>
+            </div>
+            <div class="row" style="float:right;">
+                <div id="status" class="sub">Click "Update" to fetch
+                    forecast</div>
+                <button id="refresh" class="btn">Update</button>
+            </div>
+            <div style="clear:both"></div>
+        </header>
+
+        <div class="panel">
+            <div class="grid">
+                <div class="card">
+                    <div class="big">Temperature</div>
+                    <div class="sub">Min / Max (°C)</div>
+                    <div id="temp-table"></div>
+                </div>
+
+                <div class="card">
+                    <div class="big">Precipitation & Wind</div>
+                    <div class="sub">Precipitation (mm) • Wind (m/s)</div>
+                    <div id="precip-wind-table"></div>
+                </div>
+            </div>
+
+            <div class="footer small">Model: Hybrid (LSTM + SVM). Source CSV
+                used to bootstrap lag features.</div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div>© {{ now().year if now is defined else "" }}
+                SmartAgroCare</div>
+            <div class="footer-links">
+                <a href="/about">About</a> •
+                <a href="/privacy">Privacy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const statusEl = document.getElementById('status');
+        const tempTable = document.getElementById('temp-table');
+        const precipWindTable = document.getElementById('precip-wind-table');
+        const refreshBtn = document.getElementById('refresh');
+
+        async function fetchForecast() {
+            try {
+                statusEl.innerHTML = '<span class="loader"></span> Fetching...';
+                const res = await fetch('/predict');
+                if (!res.ok) throw new Error('Network error');
+                const json = await res.json();
+                renderForecast(json);
+                statusEl.textContent = 'Forecast updated';
+            } catch (err) {
+                statusEl.textContent = 'Error fetching forecast';
+                console.error(err);
+            }
+        }
+
+        function renderForecast(payload) {
+            const minArr = payload.data.temp && payload.data.temp.min ? payload.data.temp.min : [];
+            const maxArr = payload.data.temp && payload.data.temp.max ? payload.data.temp.max : [];
+            const precipArr = payload.data.precip || [];
+            const windArr = payload.data.wind || [];
+
+            let tHtml = '<table><thead><tr><th>Date</th><th>Min (°C)</th><th>Max (°C)</th></tr></thead><tbody>';
+            for (let i = 0; i < Math.max(minArr.length, maxArr.length); i++) {
+                const d = (minArr[i] || maxArr[i] || {}).date || '';
+                const mi = minArr[i] ? (minArr[i].value) : '-';
+                const ma = maxArr[i] ? (maxArr[i].value) : '-';
+                tHtml += `<tr><td>${d}</td><td>${mi}</td><td>${ma}</td></tr>`;
+            }
+            tHtml += '</tbody></table>';
+            tempTable.innerHTML = tHtml;
+
+            let pwHtml = '<table><thead><tr><th>Date</th><th>Precip (mm)</th><th>Wind (m/s)</th></tr></thead><tbody>';
+            for (let i = 0; i < Math.max(precipArr.length, windArr.length); i++) {
+                const d = (precipArr[i] || windArr[i] || {}).date || '';
+                const pr = precipArr[i] ? precipArr[i].value : '-';
+                const wd = windArr[i] ? windArr[i].value : '-';
+                pwHtml += `<tr><td>${d}</td><td>${pr}</td><td>${wd}</td></tr>`;
+            }
+            pwHtml += '</tbody></table>';
+            precipWindTable.innerHTML = pwHtml;
+        }
+
+        refreshBtn.addEventListener('click', fetchForecast);
+        fetchForecast();
+    </script>
+</body>
+
+</html>

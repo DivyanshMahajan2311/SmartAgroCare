@@ -1,0 +1,508 @@
+/* =========================
+   SmartAgroCare - merged stylesheet
+   Combines original style.css + page-specific UI + navbar & footer
+   ========================= */
+
+/* Generic reset & base */
+
+* {
+    box-sizing: border-box;
+    font-family: "Times New Roman", Times, serif;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    background-image: url("/static/farm.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #2e5d2c;
+    position: relative;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Overlay to keep text readable */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.0));
+    z-index: 0;
+}
+
+/* ---------- Navbar ---------- */
+.site-nav {
+    width: 100%;
+    background: rgba(5, 60, 20, 0.85);
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    padding: 15px;
+}
+
+.site-nav .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 18px;
+}
+
+.site-nav .brand {
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 20px;
+    letter-spacing: 0.2px;
+}
+
+.site-nav .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* simple link style */
+.site-nav .nav-link {
+    color: rgba(255, 255, 255, 0.94);
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+.site-nav .nav-link:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* dropdown for Farmer Care */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background: transparent;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.dropdown:hover .dropbtn {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: rgba(15, 35, 10, 0.95);
+    min-width: 220px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 10000;
+}
+
+.dropdown-content a {
+    color: #e6f7e9;
+    padding: 10px 14px;
+    text-decoration: none;
+    display: block;
+    font-weight: 600;
+}
+
+.dropdown-content a:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+    background: rgba(6, 40, 12, 0.85);
+    color: #d7f7de;
+    padding: 18px 8px;
+    margin-top: 40px;
+}
+
+.site-footer .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+}
+
+.site-footer .footer-links a {
+    color: #d7f7de;
+    text-decoration: none;
+    margin-left: 8px;
+}
+
+.site-footer .footer-links a:hover {
+    text-decoration: underline;
+}
+
+/* ---------- Containers & common components ---------- */
+.container {
+    max-width: 600px;
+    margin: 80px auto;
+    position: relative;
+    z-index: 10;
+    /* above background */
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 8px 30px rgba(2, 6, 23, 0.08);
+    padding: 20px;
+    border-radius: 12px;
+}
+
+h1 {
+    color: #145214;
+    font-size: 26px;
+    margin: 0 0 12px;
+}
+
+.subtitle {
+    color: rgba(10, 50, 12, 0.85);
+    margin-top: 6px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/* Inputs & buttons */
+input[type="text"],
+input[type="number"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(46, 93, 44, 0.6);
+    font-size: 16px;
+    margin-bottom: 15px;
+    background-color: rgba(255, 255, 255, 0.85);
+    color: #2e5d2c;
+}
+
+button,
+input[type="submit"] {
+    background-color: rgba(76, 175, 80, 0.9);
+    color: white;
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 10px 18px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    opacity: 0.95;
+}
+
+/* Wheat animation background (shared) */
+.wheat-field {
+    position: relative;
+    width: 100vw;
+    perspective: 800px;
+    background: #B8A038;
+    height: 50vh;
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
+}
+
+.wheat-stalk {
+    position: absolute;
+    bottom: 0;
+    width: 6px;
+    background-color: #e5b300;
+    transform-origin: bottom center;
+    animation: sway 3s ease-in-out infinite alternate;
+    opacity: 0.9;
+}
+
+.wheat-head {
+    position: absolute;
+    top: -30px;
+    left: -5px;
+    width: 16px;
+    height: 30px;
+    background-color: #f7d540;
+    border-radius: 40% 40% 10px 10px;
+}
+
+@keyframes sway {
+    0% {
+        transform: rotateZ(-4deg);
+    }
+
+    100% {
+        transform: rotateZ(4deg);
+    }
+}
+
+/* ---------- Home page layout ---------- */
+.home-wrap {
+    max-width: 1200px;
+    margin: 36px auto;
+    padding: 22px;
+    z-index: 10;
+    position: relative;
+}
+
+.home-hero {
+    text-align: center;
+    margin-bottom: 18px;
+    color: #062a12;
+}
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.service-card {
+    display: block;
+    background: rgba(255, 255, 255, 0.92);
+    padding: 26px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #0b3a18;
+    box-shadow: 0 12px 30px rgba(2, 6, 23, 0.08);
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 22px 40px rgba(2, 6, 23, 0.12);
+}
+
+.service-icon {
+    font-size: 36px;
+    margin-bottom: 8px;
+    display: inline-block;
+}
+
+/* ---------- Weather UI (merged) ---------- */
+:root {
+    --bg: #071428;
+    --card: #0e1630;
+    --accent: #00d4ff;
+    --muted: #99a7bf;
+    --glass: rgba(255, 255, 255, 0.03);
+}
+
+.wrap {
+    max-width: 1100px;
+    margin: 36px auto;
+    padding: 22px;
+    z-index: 10;
+    position: relative;
+}
+
+.panel {
+    margin-top: 18px;
+    background: var(--card);
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 8px 30px rgba(2, 6, 23, 0.6);
+    color: #cfeeff;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.card {
+    background: var(--glass);
+    padding: 14px;
+    border-radius: 10px;
+    min-height: 120px;
+}
+
+.big {
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+}
+
+.sub {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+    color: #dbe9ff;
+}
+
+th,
+td {
+    padding: 10px 8px;
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 13px;
+}
+
+/* loader and button */
+.loader {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.06);
+    border-top: 3px solid var(--accent);
+    animation: spin 1s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.btn {
+    background: var(--accent);
+    color: #022;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* small helpers */
+.small {
+    font-size: 13px;
+    color: #bcd6ef;
+}
+
+/* responsive */
+@media (max-width: 720px) {
+    .nav-inner {
+        padding: 12px;
+    }
+
+    .site-nav .brand {
+        font-size: 18px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+        margin: 60px 12px;
+    }
+
+    .service-card {
+        padding: 18px;
+    }
+}
+
+/* safety: ensure wheat animation stays behind content */
+.wheat-field {
+    pointer-events: none;
+}
+
+.about-wrapper {
+    max-width: 1100px;
+    margin: 40px auto 60px;
+    padding: 0 20px;
+}
+
+.about-hero {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 30px 26px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    margin-bottom: 28px;
+}
+
+.about-hero h1 {
+    margin: 0 0 10px;
+    font-size: 28px;
+    color: #145214;
+}
+
+.about-hero p.lead {
+    margin: 0;
+    font-size: 15px;
+    color: #444;
+    line-height: 1.6;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+}
+
+.about-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 18px 18px 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.about-card h3 {
+    margin-top: 0;
+    margin-bottom: 6px;
+    font-size: 18px;
+    color: #145214;
+}
+
+.about-card p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+}
+
+.about-meta {
+    margin-top: 24px;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.6;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 10px;
+    padding: 16px 18px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+/* Hide default radio */
+input[type="radio"] {
+    /* accent-color: #2e5d2c; */
+    accent-color: red;   /* 🔵 Change this to any color you want */
+}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Crop Recommendation Result • SmartAgroCare</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .result-wrap {
+            max-width: 980px;
+            margin: 70px auto;
+            padding: 18px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            align-items: start;
+        }
+
+        .main-box {
+            padding: 18px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #f6fff2, #e6f6e9);
+        }
+
+        .mix-box {
+            padding: 14px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #fffaf0, #fff3e6);
+        }
+
+        h2 {
+            margin: 0 0 8px;
+            color: #145214;
+        }
+
+        .meta {
+            font-size: 20px;
+            color: #333;
+            margin-top: 6px;
+        }
+
+        .small {
+            font-size: 18px;
+            color: #666;
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 14px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            background: #00b894;
+            color: white;
+            text-decoration: none;
+        }
+
+        .stat {
+            font-size: 25px;
+            font-weight: 700;
+            color: #0c6b3a;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="site-nav">
+        <div class="nav-inner">
+            <a style="font-family: 'Bradley Hand', cursive; font-size: 25pt;" class="brand" href="/">🌱
+                SmartAgroCare</a>
+            <div class="nav-links">
+                <a href="/about" class="nav-link">About</a>
+                <div class="dropdown">
+                    <button class="dropbtn">Farmer Care ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/crop">Crop Recommendation</a>
+                        <a href="/fertilizer">Fertilizer Recommendation</a>
+                        <a href="/weather">7-Day Weather Forecast</a>
+                    </div>
+                </div>
+                <a class="nav-link" href="/weather">Weather</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="result-wrap">
+        <div class="card">
+            <h2>Crop Recommendation Result</h2>
+            {% if result and result.error %}
+            <p style="color:red;">Error: {{ result.error }}</p>
+            {% else %}
+            <div class="grid">
+                <div class="main-box">
+                    <div class="small">Main Recommended Crop</div>
+                    <div class="stat">{{ result.main_crop }}</div>
+                    <div class="meta">Estimated time to grow: <strong>{{
+                            result.main_time if result.main_time is not none
+                            else 'N/A' }} months</strong></div>
+                    <br><br>
+                    <div class="small" style="margin-top:8px;">Ideal Season:
+                        <strong>{{ result.season if result.season is not
+                            none else 'N/A' }}</strong>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="mix-box" style="margin-bottom:12px;">
+                        <div class="small">Mix Crop 1</div>
+                        <div class="stat">{{ result.mix_crop_1 }}</div>
+                        <div class="meta">Estimated Time: <strong>{{
+                                result.mix_time_1 if result.mix_time_1 is
+                                not none else 'N/A' }} months</strong></div>
+                    </div>
+
+                    <div class="mix-box">
+                        <div class="small">Mix Crop 2</div>
+                        <div class="stat">{{ result.mix_crop_2 }}</div>
+                        <div class="meta">Estimated Time: <strong>{{
+                                result.mix_time_2 if result.mix_time_2 is
+                                not none else 'N/A' }} months</strong></div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="wheat-field" aria-hidden="true"></div>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div>© {{ now().year if now is defined else "" }}
+                SmartAgroCare</div>
+            <div class="footer-links">
+                <a href="/about">About</a> •
+                <a href="/privacy">Privacy</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

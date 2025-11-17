@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About • SmartAgroCare</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a style="font-family: 'Bradley Hand', cursive; font-size: 25pt;" class="brand" href="/">🌱 SmartAgroCare</a>
+      <div class="nav-links">
+        <a href="/about" class="nav-link active">About</a>
+
+        <div class="dropdown">
+          <button class="dropbtn">Farmer Care ▾</button>
+          <div class="dropdown-content">
+            <a href="/crop">Crop Recommendation</a>
+            <a href="/fertilizer">Fertilizer Recommendation</a>
+            <a href="/weather">7-Day Weather Forecast</a>
+          </div>
+        </div>
+
+        <a class="nav-link" href="/weather">Weather</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="about-wrapper">
+
+    <section class="about-hero">
+      <h1>About SmartAgroCare</h1>
+      <p class="lead">
+        <strong>SmartAgroCare</strong> is a unified smart-agriculture platform designed to help
+        farmers make informed decisions using machine learning and deep learning.
+        It integrates three professional modules:
+        <strong>Crop Recommendation</strong>, <strong>Fertilizer Recommendation</strong>, and a
+        <strong>7-Day Weather Forecast</strong>.
+      </p>
+    </section>
+
+    <section class="about-grid">
+
+      <article class="about-card">
+        <h3>🌱 Crop Recommendation</h3>
+        <p>
+          Based on soil nutrients (N-P-K), temperature, humidity, pH and rainfall,
+          the system predicts the best-suited crop for your field and the season to grow it.
+          It uses a trained ML model for high accuracy and reliable decisions.
+        </p>
+      </article>
+
+      <article class="about-card">
+        <h3>🌾 Fertilizer Recommendation</h3>
+        <p>
+          Given the crop name and soil nutrient information, the system recommends
+          the most appropriate fertilizer to improve soil health, maintain balance and
+          increase yield while reducing unnecessary cost and wastage.
+        </p>
+      </article>
+
+      <article class="about-card">
+        <h3>🌦 7-Day Weather Forecast</h3>
+        <p>
+          Using a hybrid deep-learning model (LSTM + SVM), SmartAgroCare predicts:
+          minimum/maximum temperature, wind speed, and precipitation for the next 7 days.
+          Ideal for irrigation planning, pesticide application and harvesting decisions.
+        </p>
+      </article>
+
+    </section>
+
+    <section class="about-meta">
+      <p>
+        <strong>Technical Vision:</strong> to simplify access to advanced analytics such as ML and DL models,
+        bringing actionable guidance directly to farmers in a clean and interactive interface.
+      </p>
+      <p>
+        <strong>Goal:</strong> Empower every farmer with data-driven intelligence, reduce risks,
+        boost productivity, and promote sustainable agriculture.
+      </p>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>© {{ now().year if now is defined else "" }}
+        SmartAgroCare</div>
+      <div class="footer-links">
+        <a href="/about">About</a> •
+        <a href="/privacy">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>

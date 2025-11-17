@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>SmartAgroCare — Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="site-nav">
+        <div class="nav-inner">
+            <a style="font-family: 'Bradley Hand', cursive; font-size: 25pt;" class="brand" href="/">🌱
+                SmartAgroCare</a>
+            <div class="nav-links">
+                <a href="/about" class="nav-link">About</a>
+                <div class="dropdown">
+                    <button class="dropbtn">Farmer Care ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/crop">Crop Recommendation</a>
+                        <a href="/fertilizer">Fertilizer Recommendation</a>
+                        <a href="/weather">7-Day Weather Forecast</a>
+                    </div>
+                </div>
+                <a class="nav-link" href="/weather">Weather</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="home-wrap">
+        <header class="home-hero">
+            <h1>Welcome to 🌱 SmartAgroCare !!</h1>
+            <p class="subtitle">Smart, data-driven recommendations for
+                crops, fertilizer and weather forecasting — made for
+                farmers.</p>
+        </header>
+
+        <section class="service-grid">
+            <a class="service-card" href="/crop">
+                <div class="service-icon">🌽</div>
+                <h3>Crop Recommendation</h3>
+                <p>Get the best crop choice for your soil & climate.</p>
+            </a>
+
+            <a class="service-card" href="/fertilizer">
+                <div class="service-icon">🌾</div>
+                <h3>Fertilizer Recommendation</h3>
+                <p>Know which fertilizer suits your crop and soil
+                    condition.</p>
+            </a>
+
+            <a class="service-card" href="/weather">
+                <div class="service-icon">☁️</div>
+                <h3>7-Day Weather Forecast</h3>
+                <p>Hybrid LSTM+SVM predictions for temperature, rain, and
+                    wind.</p>
+            </a>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div>© {{ now().year if now is defined else "" }}
+                SmartAgroCare</div>
+            <div class="footer-links">
+                <a href="/about">About</a> •
+                <a href="/privacy">Privacy</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

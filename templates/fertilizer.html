@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fertilizer Recommendation</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .container {
+            padding: 30px;
+            border-radius: 10px;
+            margin: 80px auto;
+            max-width: 600px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="site-nav">
+        <div class="nav-inner">
+            <a style="font-family: 'Bradley Hand', cursive; font-size: 25pt;" class="brand" href="/">🌱
+                SmartAgroCare</a>
+            <div class="nav-links">
+                <a href="/about" class="nav-link">About</a>
+                <div class="dropdown">
+                    <button class="dropbtn">Farmer Care ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/crop">Crop Recommendation</a>
+                        <a href="/fertilizer">Fertilizer Recommendation</a>
+                        <a href="/weather">7-Day Weather Forecast</a>
+                    </div>
+                </div>
+                <a class="nav-link" href="/weather">Weather</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 style="text-align: center;">🌾 Fertilizer Recommendation</h1>
+        <h4 style="text-align: center;">Enter Crop and Soil Parameters</h4>
+
+        <form method="POST" action="/fertilizer/predict">
+            <div style="margin-bottom: 12px;">
+                <label style="font-weight: 600; display: block; margin-bottom: 6px;">Fertilizer Type:</label>
+                <label style="margin-right: 12px;">
+                    <input type="radio" name="fert_type" value="inorganic" checked>
+                    Inorganic
+                </label>
+                <label>
+                    <input type="radio" name="fert_type" value="organic">
+                    Organic
+                </label>
+            </div>
+            <p style="margin-bottom: 0; margin-top: 0;">Crop Name: </p>
+            <input type="text" name="crop" placeholder="e.g. wheat, rice, cotton, ....." required>
+            <p style="margin-bottom: 0; margin-top: 0;">Soil pH: </p>
+            <input type="number" step="0.01" name="pH" placeholder="between 6-9, in decimals also" required>
+            <p style="margin-bottom: 0; margin-top: 0;">Nitrogen (kg/ha):
+            </p>
+            <input type="number" step="0.01" name="N" placeholder="N" required>
+            <p style="margin-bottom: 0; margin-top: 0;">Phosphorus (kg/ha):
+            </p>
+            <input type="number" step="0.01" name="P" placeholder="P" required>
+            <p style="margin-bottom: 0; margin-top: 0;">Potassium (kg/ha):
+            </p>
+            <input type="number" step="0.01" name="K" placeholder="K" required>
+            <br><br>
+            <button type="submit">Predict Fertilizer</button>
+        </form>
+
+        {% if prediction %}
+        <div style="margin-top: 25px;" class="result">
+            ✅ Recommended Fertilizer: <strong>{{ prediction }}</strong>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="wheat-field" aria-hidden="true"></div>
+
+    <script>
+        const wheatField = document.querySelector('.wheat-field');
+        const numberOfStalks = 80;
+
+        for (let i = 0; i < numberOfStalks; i++) {
+            const stalk = document.createElement('div');
+            stalk.classList.add('wheat-stalk');
+
+            stalk.style.left = `${Math.random() * 100}vw`;
+            stalk.style.height = `${40 + Math.random() * 15}vh`;
+            stalk.style.bottom = `${Math.random() * 10}vh`;
+            stalk.style.animationDelay = `${Math.random() * 4}s`;
+            stalk.style.animationDuration = `${4 + Math.random() * 3}s`;
+
+            const head = document.createElement('div');
+            head.classList.add('wheat-head');
+            stalk.appendChild(head);
+
+            wheatField.appendChild(stalk);
+        }
+    </script>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div>© {{ now().year if now is defined else "" }}
+                SmartAgroCare</div>
+            <div class="footer-links">
+                <a href="/about">About</a> •
+                <a href="/privacy">Privacy</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
